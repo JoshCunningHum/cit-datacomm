@@ -7,6 +7,7 @@ import {
     useFileDialog,
 } from "@vueuse/core";
 import { ref, toRefs, watch } from "vue";
+import { number } from "yup";
 
 // Should output the base64 string
 const model = defineModel<string>();
@@ -19,7 +20,7 @@ const prop = withDefaults(
     }>(),
     {
         accept: "image/*",
-    }
+    },
 );
 const { accept } = toRefs(prop);
 
@@ -48,8 +49,8 @@ onChange(async (files) => {
                 Array.from(files).map(async (f) => {
                     const { promise } = useBase64(f);
                     return await promise.value;
-                })
-            )
+                }),
+            ),
         );
     } else {
         set(base64s, []);
@@ -107,7 +108,7 @@ const { isOverDropZone } = useDropZone(container, {
     <div
         ref="container"
         @click.self="() => open()"
-        class="flex min-h-10 cursor-pointer select-none items-center justify-center rounded border border-dashed text-sm bg-surface-950"
+        class="flex min-h-10 cursor-pointer select-none items-center justify-center rounded border border-dashed bg-surface-950 text-sm"
         :class="{
             'py-3': files?.length,
             'border-surface-700 text-surface-400 hover:bg-surface-700 active:bg-surface-600/50':
@@ -129,11 +130,22 @@ const { isOverDropZone } = useDropZone(container, {
         <div v-else-if="!isOverDropZone">
             <div
                 v-for="(file, i) in files"
-                :key="file.name"
+                :key="
+                    typeof file === 'object' && 'name' in file ? file.name : i
+                "
                 class="flex max-w-60 items-center justify-between gap-2 rounded bg-surface-700 px-2 py-1 text-surface-200 hover:bg-surface-600"
             >
-                <span class="truncate"> {{ file.name }}</span>
-                <i class="pi pi-times text-xs" @click="() => remove(i)" />
+                <span class="truncate">
+                    {{
+                        typeof file === "object" && "name" in file
+                            ? file.name
+                            : i
+                    }}</span
+                >
+                <i
+                    class="pi pi-times text-xs"
+                    @click="() => typeof i === 'number' && remove(i)"
+                />
             </div>
         </div>
     </div>

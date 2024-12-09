@@ -11,7 +11,7 @@ import { tt } from "@/lib/Tooltip";
                 v-for="item in menus"
                 :key="item.name"
                 v-tip="tt(item.tooltip || '')"
-                :to="item.route"
+                :to="item.route as any"
             >
                 <i :class="item.icon" class="pi" />
                 <span>{{ item.name }}</span>
@@ -23,20 +23,20 @@ import { tt } from "@/lib/Tooltip";
 
 <style lang="scss" scoped>
 #root {
-    @apply max-w-3xl mx-auto space-y-8;
+    @apply mx-auto max-w-3xl space-y-8;
 
     h2 {
-        @apply text-4xl font-bold text-center py-4;
+        @apply py-4 text-center text-4xl font-bold;
     }
 
     #topic-grid {
         @apply w-full;
-        @apply py-2 px-8;
-        @apply flex flex-wrap gap-4 justify-center;
+        @apply px-8 py-2;
+        @apply flex flex-wrap justify-center gap-4;
 
         & > a {
-            @apply border border-surface-700 rounded-lg;
-            @apply basis-32 aspect-square px-2 cursor-pointer;
+            @apply rounded-lg border border-surface-700;
+            @apply aspect-square basis-32 cursor-pointer px-2;
             @apply flex flex-col items-center justify-center;
             @apply hover:bg-surface-700;
 
@@ -45,7 +45,7 @@ import { tt } from "@/lib/Tooltip";
             }
 
             span {
-                @apply text-sm text-center;
+                @apply text-center text-sm;
             }
         }
     }

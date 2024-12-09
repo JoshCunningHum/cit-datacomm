@@ -1,4 +1,5 @@
 const hl = (content: string) => `<span class='text-primary'>${content}</span>`;
+import { type SidebarItem } from "@/lib/Sidebar/types";
 
 export const menus: SidebarItem[] = [
     {
