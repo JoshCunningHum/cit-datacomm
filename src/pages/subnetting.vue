@@ -3,9 +3,8 @@ import Fill from "@/components/Fill.vue";
 import FixedInputContainer from "@/components/Subnetting/FixedInputContainer.vue";
 import SubnetOutput from "@/components/Subnetting/SubnetOutput.vue";
 import VariableInputContainer from "@/components/Subnetting/VariableInputContainer.vue";
-import { field } from "@/hooks/field";
 import enumToArray from "@/lib/utils/enumToArray";
-import { toRefs } from "@vueuse/core";
+import { field } from "@/hooks/field";
 import { ref } from "vue";
 
 enum HostRangeType {
